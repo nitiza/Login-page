@@ -130,7 +130,7 @@ class users extends BaseController
                
 
                 $newData = [
-                    'Id' => session()->get('Id'),
+                    'id' => session()->get('Id'),
                     'firstname' => $this->request->getPost('firstname'),
                     'lastname' => $this->request->getPost('lastname'),
                     
@@ -138,7 +138,7 @@ class users extends BaseController
                 if($this->request->getPost('password') != ''){
                     $newData['password'] = $this->request->getPost('password');
                 }
-
+                
                 $model->save($newData);
                 session()->setFlashdata('success', 'Successfully Updated');
                 return redirect()->to('/profile');
@@ -147,11 +147,14 @@ class users extends BaseController
             }
         }
 
-        $data['user'] = $model->where('Id', session()->get('Id'))->first();
+        $data['user'] = $model->where('id', session()->get('Id'))->first();
         echo view('layout/header',$data);
         echo view('profile');
         echo view('layout/footer');
     }
+
+
+
 
     public function logout(){
         session()->destroy();
