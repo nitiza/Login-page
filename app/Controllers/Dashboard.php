@@ -6,6 +6,7 @@ class Dashboard extends BaseController
     public function index()
     {
         $data = [];
+        
 
         echo view('layout/header',$data);
         echo view('dashboard');

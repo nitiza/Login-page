@@ -9,7 +9,7 @@
                         <?= session()->get('success') ?>
                     </div>
                 <?php endif; ?>
-                <form class="" action="index" method="post">
+                <form class="" action="/index" method="post">
                     <div class="form-group">
                         <label for="email">Email address</label>
                         <input type="text" class="form-control" name="email" id="email" value="<?= set_value('email') ?>">
@@ -35,7 +35,7 @@
 
                         </div>
                         <div class="col-12 col-sm-8 text-right">
-                            <a href="register">Don't Have an account yet?</a>
+                            <a href="/register">Don't Have an account yet?</a>
                         </div>
                     </div>
                 </form>

@@ -34,7 +34,7 @@ class users extends BaseController
                 
                 $this->setUserSession($user);
                 //$session->setFlashdata('success', 'Successful Registration');
-                return redirect()->to('NitishaProject/login/public/dashboard');
+                return redirect()->to('/dashboard');
                 
                 
             }
@@ -47,7 +47,7 @@ class users extends BaseController
     
     private function setUserSession($user){
         $data = [
-            //'id' => $user['id'],
+            'Id' => $user['Id'],
             'firstname' => $user['firstname'],
             'lastname' => $user['lastname'],
             'email' => $user['email'],
@@ -89,7 +89,7 @@ class users extends BaseController
                 $model->save($newData);
                 $session = session();
                 $session->setFlashdata('success', 'Successful Registration');
-                return redirect()->to('NitishaProject/login/public/index');
+                return redirect()->to('/index');
                 
                 
             }
@@ -101,6 +101,62 @@ class users extends BaseController
 
     }
 
+
+
+    public  function profile(){
+        
+        $data = [];
+        helper(['form']);
+        $model = new UserModel();
+
+        if($this->request->getMethod() == 'post'){
+            //Let's do the validation here
+            $rules = [ 
+                'firstname' => 'required|min_length[3]|max_length[20]',
+                'lastname' => 'required|min_length[3]|max_length[20]',
+            ];
+
+            if($this->request->getPost('password') != ''){
+                $rules['password'] = 'required|min_length[8]|max_length[255]';
+                $rules['password_confirm'] = 'matches[password]';
+
+            }
+
+
+            if(! $this->validate($rules)){
+                $data['validation'] = $this->validator;
+            }else{
+                
+               
+
+                $newData = [
+                    'Id' => session()->get('Id'),
+                    'firstname' => $this->request->getPost('firstname'),
+                    'lastname' => $this->request->getPost('lastname'),
+                    
+                ];
+                if($this->request->getPost('password') != ''){
+                    $newData['password'] = $this->request->getPost('password');
+                }
+
+                $model->save($newData);
+                session()->setFlashdata('success', 'Successfully Updated');
+                return redirect()->to('/profile');
+                
+                
+            }
+        }
+
+        $data['user'] = $model->where('Id', session()->get('Id'))->first();
+        echo view('layout/header',$data);
+        echo view('profile');
+        echo view('layout/footer');
+    }
+
+    public function logout(){
+        session()->destroy();
+        return redirect()->to('/index');
+    }
 	//--------------------------------------------------------------------
 
 }
