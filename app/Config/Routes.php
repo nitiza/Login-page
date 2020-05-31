@@ -30,6 +30,14 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
+
+/*$routes->add('blog', function(){
+	return "<h2> This is a blog </h2>";
+});*/
+
+
+
+
 $routes->get('logout', 'users::logout');
 $routes->match(['get','post'],'index', 'users::index',['filter' => 'noauth']);
 $routes->match(['get','post'],'register','users::register',['filter' =>'noauth']);

@@ -39,7 +39,7 @@ class users extends BaseController
                 
             }
         }
-
+        
         echo view('layout/header',$data);
         echo view('login');
         echo view('layout/footer');
@@ -63,6 +63,7 @@ class users extends BaseController
     public function register(){
 
         $data = [];
+
         helper(['form']);
         
         if($this->request->getMethod() == 'post'){
@@ -89,12 +90,12 @@ class users extends BaseController
                 $model->save($newData);
                 $session = session();
                 $session->setFlashdata('success', 'Successful Registration');
-                return redirect()->to('/index');
+                return redirect()->to('/');
                 
                 
             }
         }
-
+        
         echo view('layout/header',$data);
         echo view('register');
         echo view('layout/footer');

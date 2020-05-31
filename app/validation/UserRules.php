@@ -11,7 +11,7 @@ class UserRules
 
         if(!$user)
         return  false;
-        return password_verify($data['password'], $user['password']);
 
+    return password_verify($data['password'], $user['password']);
     }
 }
